@@ -3,7 +3,8 @@ require('express-async-errors')
 const express = require("express");
 const app = express();
 // const connectDB = require('./src/db/connect')
-// const appRoute = require('./src/router/router')
+const authRoute = require('./src/router/authRouter')
+const jobsRoute = require('./src/router/jobsRouter')
 
 // Error Handling
 const notFoundMiddleware = require("./src/middleware/not-found");
@@ -13,10 +14,8 @@ const errorMiddleware = require("./src/middleware/error-handler");
 app.use(express.json());
 
 // Route
-// app.use('/', appRoute )
-app.get("/", (req, res) => {
-	res.send("Welcome to the Jobs API");
-});
+app.use('/jobsapi', authRoute) // ->jobsapi/login
+app.use('/jobsapi/jobs', jobsRoute) // -> jobsapi/createjob
 
 // using the error handlers
 app.use(notFoundMiddleware);
